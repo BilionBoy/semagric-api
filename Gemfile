@@ -41,3 +41,28 @@ group :development, :test do
 end
 
 
+
+  # Gem para Postgres
+  gem "pg"
+
+  # Gem para paginaçao
+  gem "pagy", "~> 5.10"
+
+  # Gem para filtro de pesquisas
+  gem "ransack"
+
+  # Gem para permitir a conexão navegador do cliente
+  gem "rack-cors"
+
+  # Gem para debuggar
+  gem "byebug"
+
+  gem "active_model_serializers" # Gem para serializar
+
+  # Para gerar tokens JWT
+  gem "jwt"
+
+  # Para armazenar senhas hashadas
+  gem "bcrypt", "~> 3.1.7"
+
+
