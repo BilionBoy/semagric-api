@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_19_141856) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_19_180945) do
   create_table "a_tipo_usuarios", force: :cascade do |t|
     t.string "descricao"
     t.datetime "created_at", null: false
@@ -22,6 +22,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_141856) do
     t.integer "ano"
     t.date "data_inicio"
     t.date "data_fim"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "e_tipo_expositores", force: :cascade do |t|
+    t.string "descricao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

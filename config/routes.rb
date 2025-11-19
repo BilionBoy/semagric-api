@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
- namespace :api do
+  namespace :api do
     namespace :v1 do
-    resources :a_tipo_usuarios
-    resources :e_eventos
+      resources :a_tipo_usuarios
+      resources :e_eventos
+      resources :e_tipo_expositores
     end
   end  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
