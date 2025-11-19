@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_19_180945) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_19_181420) do
   create_table "a_tipo_usuarios", force: :cascade do |t|
     t.string "descricao"
     t.datetime "created_at", null: false
@@ -26,9 +26,41 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_180945) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "e_expositores", force: :cascade do |t|
+    t.integer "e_evento_id", null: false
+    t.integer "e_tipo_expositor_id", null: false
+    t.integer "e_segmento_id", null: false
+    t.string "status"
+    t.string "empresa"
+    t.string "cnpj"
+    t.string "nome_completo"
+    t.string "cpf"
+    t.string "responsavel"
+    t.string "email_contato"
+    t.string "telefone_contato"
+    t.string "cidade"
+    t.string "estado"
+    t.string "stand"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["e_evento_id"], name: "index_e_expositores_on_e_evento_id"
+    t.index ["e_segmento_id"], name: "index_e_expositores_on_e_segmento_id"
+    t.index ["e_tipo_expositor_id"], name: "index_e_expositores_on_e_tipo_expositor_id"
+  end
+
+  create_table "e_segmentos", force: :cascade do |t|
+    t.string "descricao"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "e_tipo_expositores", force: :cascade do |t|
     t.string "descricao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  add_foreign_key "e_expositores", "e_eventos"
+  add_foreign_key "e_expositores", "e_segmentos"
+  add_foreign_key "e_expositores", "e_tipo_expositores"
 end

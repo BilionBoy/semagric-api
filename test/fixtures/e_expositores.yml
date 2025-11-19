@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  e_evento: one
+  e_tipo_expositor: one
+  e_segmento: one
+  status: MyString
+  empresa: MyString
+  cnpj: MyString
+  nome_completo: MyString
+  cpf: MyString
+  responsavel: MyString
+  email_contato: MyString
+  telefone_contato: MyString
+  cidade: MyString
+  estado: MyString
+  stand: MyString
+
+two:
+  e_evento: two
+  e_tipo_expositor: two
+  e_segmento: two
+  status: MyString
+  empresa: MyString
+  cnpj: MyString
+  nome_completo: MyString
+  cpf: MyString
+  responsavel: MyString
+  email_contato: MyString
+  telefone_contato: MyString
+  cidade: MyString
+  estado: MyString
+  stand: MyString

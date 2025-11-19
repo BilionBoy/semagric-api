@@ -4,6 +4,8 @@ Rails.application.routes.draw do
       resources :a_tipo_usuarios
       resources :e_eventos
       resources :e_tipo_expositores
+      resources :e_segmentos
+      resources :e_expositores
     end
   end  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
