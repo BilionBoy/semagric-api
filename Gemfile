@@ -44,7 +44,7 @@ end
   gem "pg"
 
   # Gem para paginaçao
-  gem "pagy", "~> 5.10"
+  gem "pagy", "~> 43.0"
 
   # Gem para filtro de pesquisas
   gem "ransack"
