@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_19_181922) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_19_182306) do
   create_table "a_tipo_usuarios", force: :cascade do |t|
     t.string "descricao"
     t.datetime "created_at", null: false
@@ -86,10 +86,23 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_181922) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "password_digest"
+    t.integer "a_tipo_usuario_id"
+    t.integer "e_expositor_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["a_tipo_usuario_id"], name: "index_users_on_a_tipo_usuario_id"
+    t.index ["e_expositor_id"], name: "index_users_on_e_expositor_id"
+  end
+
   add_foreign_key "e_clientes", "e_expositores"
   add_foreign_key "e_expositores", "e_eventos"
   add_foreign_key "e_expositores", "e_segmentos"
   add_foreign_key "e_expositores", "e_tipo_expositores"
   add_foreign_key "e_negociacoes", "e_clientes"
   add_foreign_key "e_negociacoes", "e_expositores"
+  add_foreign_key "users", "a_tipo_usuarios"
+  add_foreign_key "users", "e_expositores"
 end

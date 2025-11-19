@@ -6,4 +6,5 @@
   inflect.irregular "e_expositor",                       "e_expositores"
   inflect.irregular "e_cliente",                         "e_clientes"
   inflect.irregular "e_negociacao",                      "e_negociacoes"
+  inflect.irregular "user",                              "users"
  end

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      post "auth/login", to: "auth#login"
+      resources :users
       resources :a_tipo_usuarios
       resources :e_eventos
       resources :e_tipo_expositores

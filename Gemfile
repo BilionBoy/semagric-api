@@ -64,5 +64,3 @@ end
 
   # Para armazenar senhas hashadas
   gem "bcrypt", "~> 3.1.7"
-
-

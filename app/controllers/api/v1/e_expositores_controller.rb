@@ -4,6 +4,7 @@ module Api
   module V1
     class EExpositorsController < ApplicationController
       before_action :set_e_expositor, only: [ :show, :update, :destroy ]
+      skip_before_action :authenticate_user!, only: [ :create ]
 
       def index
         @e_expositores = EExpositor.all
