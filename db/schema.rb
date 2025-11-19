@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.2].define(version: 2025_11_19_182306) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "a_tipo_usuarios", force: :cascade do |t|
     t.string "descricao"
     t.datetime "created_at", null: false
@@ -18,7 +21,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_182306) do
   end
 
   create_table "e_clientes", force: :cascade do |t|
-    t.integer "e_expositor_id", null: false
+    t.bigint "e_expositor_id", null: false
     t.string "nome"
     t.string "telefone"
     t.string "email"
@@ -39,9 +42,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_182306) do
   end
 
   create_table "e_expositores", force: :cascade do |t|
-    t.integer "e_evento_id", null: false
-    t.integer "e_tipo_expositor_id", null: false
-    t.integer "e_segmento_id", null: false
+    t.bigint "e_evento_id", null: false
+    t.bigint "e_tipo_expositor_id", null: false
+    t.bigint "e_segmento_id", null: false
     t.string "status"
     t.string "empresa"
     t.string "cnpj"
@@ -61,8 +64,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_182306) do
   end
 
   create_table "e_negociacoes", force: :cascade do |t|
-    t.integer "e_expositor_id", null: false
-    t.integer "e_cliente_id", null: false
+    t.bigint "e_expositor_id", null: false
+    t.bigint "e_cliente_id", null: false
     t.string "item"
     t.integer "quantidade"
     t.decimal "valor"
@@ -89,8 +92,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_182306) do
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
-    t.integer "a_tipo_usuario_id"
-    t.integer "e_expositor_id"
+    t.bigint "a_tipo_usuario_id"
+    t.bigint "e_expositor_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["a_tipo_usuario_id"], name: "index_users_on_a_tipo_usuario_id"
