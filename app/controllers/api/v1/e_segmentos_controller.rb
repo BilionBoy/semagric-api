@@ -3,7 +3,7 @@
 module Api
   module V1
     class ESegmentosController < ApplicationController
-      before_action :set_e_segmento, only: [:show, :update, :destroy]
+      before_action :set_e_segmento, only: [ :show, :update, :destroy ]
 
       def index
         @e_segmentos = ESegmento.all
@@ -45,7 +45,7 @@ module Api
       end
 
       def e_segmento_params
-        params.require(:e_segmento).permit(descricao)
+        params.require(:e_segmento).permit(:descricao)
       end
     end
   end

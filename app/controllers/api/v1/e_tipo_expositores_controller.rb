@@ -45,7 +45,7 @@ module Api
       end
 
       def e_tipo_expositor_params
-        params.require(:e_tipo_expositor).permit(descricao)
+        params.require(:e_tipo_expositor).permit(:descricao)
       end
     end
   end

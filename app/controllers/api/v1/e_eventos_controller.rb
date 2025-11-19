@@ -3,7 +3,7 @@
 module Api
   module V1
     class EEventosController < ApplicationController
-      before_action :set_e_evento, only: [:show, :update, :destroy]
+      before_action :set_e_evento, only: [ :show, :update, :destroy ]
 
       def index
         @e_eventos = EEvento.all
@@ -45,7 +45,7 @@ module Api
       end
 
       def e_evento_params
-        params.require(:e_evento).permit(nome, ano, data_inicio, data_fim)
+        params.require(:e_evento).permit(:nome, :ano, :data_inicio, :data_fim)
       end
     end
   end

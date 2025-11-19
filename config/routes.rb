@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :e_clientes
   namespace :api do
     namespace :v1 do
       resources :a_tipo_usuarios

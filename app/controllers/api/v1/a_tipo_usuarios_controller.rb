@@ -3,7 +3,7 @@
 module Api
   module V1
     class ATipoUsuariosController < ApplicationController
-      before_action :set_a_tipo_usuario, only: [:show, :update, :destroy]
+      before_action :set_a_tipo_usuario, only: [ :show, :update, :destroy ]
 
       def index
         @a_tipo_usuarios = ATipoUsuario.all
@@ -45,7 +45,7 @@ module Api
       end
 
       def a_tipo_usuario_params
-        params.require(:a_tipo_usuario).permit(descricao)
+        params.require(:a_tipo_usuario).permit(:descricao)
       end
     end
   end
