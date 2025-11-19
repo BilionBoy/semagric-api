@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
+      get "ranking/index"
       post "auth/login", to: "auth#login"
       resources :users
       resources :a_tipo_usuarios
