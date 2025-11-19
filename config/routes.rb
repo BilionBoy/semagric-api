@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :e_clientes
   namespace :api do
     namespace :v1 do
       resources :a_tipo_usuarios
@@ -7,6 +6,8 @@ Rails.application.routes.draw do
       resources :e_tipo_expositores
       resources :e_segmentos
       resources :e_expositores
+      resources :e_negociacoes
+      resources :e_clientes
     end
   end  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

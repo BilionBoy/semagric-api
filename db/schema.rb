@@ -10,11 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_19_181420) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_19_181922) do
   create_table "a_tipo_usuarios", force: :cascade do |t|
     t.string "descricao"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "e_clientes", force: :cascade do |t|
+    t.integer "e_expositor_id", null: false
+    t.string "nome"
+    t.string "telefone"
+    t.string "email"
+    t.text "endereco"
+    t.string "interesse"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["e_expositor_id"], name: "index_e_clientes_on_e_expositor_id"
   end
 
   create_table "e_eventos", force: :cascade do |t|
@@ -48,6 +60,20 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_181420) do
     t.index ["e_tipo_expositor_id"], name: "index_e_expositores_on_e_tipo_expositor_id"
   end
 
+  create_table "e_negociacoes", force: :cascade do |t|
+    t.integer "e_expositor_id", null: false
+    t.integer "e_cliente_id", null: false
+    t.string "item"
+    t.integer "quantidade"
+    t.decimal "valor"
+    t.datetime "data_hora"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["e_cliente_id"], name: "index_e_negociacoes_on_e_cliente_id"
+    t.index ["e_expositor_id"], name: "index_e_negociacoes_on_e_expositor_id"
+  end
+
   create_table "e_segmentos", force: :cascade do |t|
     t.string "descricao"
     t.datetime "created_at", null: false
@@ -60,7 +86,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_181420) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "e_clientes", "e_expositores"
   add_foreign_key "e_expositores", "e_eventos"
   add_foreign_key "e_expositores", "e_segmentos"
   add_foreign_key "e_expositores", "e_tipo_expositores"
+  add_foreign_key "e_negociacoes", "e_clientes"
+  add_foreign_key "e_negociacoes", "e_expositores"
 end
