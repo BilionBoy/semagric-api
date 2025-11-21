@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_11_19_182306) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_21_035112) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_11_19_182306) do
     t.string "stand"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
     t.index ["e_evento_id"], name: "index_e_expositores_on_e_evento_id"
     t.index ["e_segmento_id"], name: "index_e_expositores_on_e_segmento_id"
     t.index ["e_tipo_expositor_id"], name: "index_e_expositores_on_e_tipo_expositor_id"

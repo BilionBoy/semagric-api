@@ -3,12 +3,11 @@
 module Api
   module V1
     class EExpositoresController < ApplicationController
-      before_action :set_e_expositor, only: [ :show, :update, :destroy ]
-      skip_before_action :authenticate_user!, only: [ :create ]
+      before_action :set_e_expositor, only: [ :show, :update, :destroy, :update_password ]
+      skip_before_action :authenticate_user!
 
       def index
-        expositores = EExpositor.all
-        render json: expositores
+        render json: EExpositor.all
       end
 
       def show
@@ -54,6 +53,18 @@ module Api
         render json: { status: "success", message: "Registro removido" }
       end
 
+      # ✅ NOVO - Atualizar senha do expositor
+      def update_password
+        if @e_expositor.update(password: params[:password])
+          render json: { status: "success", message: "Senha atualizada" }
+        else
+          render json: {
+            status: "error",
+            errors: @e_expositor.errors.full_messages
+          }, status: :unprocessable_entity
+        end
+      end
+
       private
 
       def set_e_expositor
@@ -62,7 +73,7 @@ module Api
         render json: { error: "Registro não encontrado" }, status: :not_found
       end
 
-      # ✅ Strong params tolerante (aceita com ou sem wrapper)
+      # ✅ Strong Params tolerante
       def e_expositor_params
         data = params[:e_expositor] || params
 
@@ -80,7 +91,8 @@ module Api
           :telefone_contato,
           :cidade,
           :estado,
-          :stand
+          :stand,
+          :password
         )
       end
     end

@@ -3,19 +3,20 @@ class EExpositor < ApplicationRecord
   belongs_to :e_tipo_expositor
   belongs_to :e_segmento
 
+  has_secure_password validations: false
 
   before_validation :normalize_documents
 
-  # Pessoa Jurídica (id = 2)
-  validates :empresa, presence: true, if: :juridica?
-  validates :cnpj, presence: true, if: :juridica?
-
-  # Pessoa Física (id = 1)
-  validates :nome_completo, presence: true, if: :fisica?
-  validates :cpf, presence: true, if: :fisica?
-
-  validates :responsavel, :email_contato, :telefone_contato,
-            :cidade, :estado, :status, presence: true
+  validates :password,                       presence: true, on: :update
+  validates :empresa,                        presence: true, if: :juridica?
+  validates :cnpj,                           presence: true, if: :juridica?
+  validates :nome_completo,                  presence: true, if: :fisica?
+  validates :cpf,                            presence: true, if: :fisica?
+  validates :responsavel,                    presence: true
+  validates :email_contato,                  presence: true
+  validates :telefone_contato,               presence: true
+  validates :cidade, :estado,                presence: true
+  validates :status,                         presence: true
 
   private
 
@@ -28,12 +29,12 @@ class EExpositor < ApplicationRecord
   end
 
   def normalize_documents
-  if cnpj.present?
-    self.cnpj = cnpj.gsub(/\D/, "")
-  end
+    if cnpj.present?
+      self.cnpj = cnpj.gsub(/\D/, "")
+    end
 
-  if cpf.present?
-    self.cpf = cpf.gsub(/\D/, "")
-  end
+    if cpf.present?
+      self.cpf = cpf.gsub(/\D/, "")
+    end
   end
 end
