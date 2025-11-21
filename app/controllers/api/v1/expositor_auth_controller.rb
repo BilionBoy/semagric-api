@@ -6,19 +6,22 @@ module Api
       def login
         expositor = EExpositor.find_by(email_contato: params[:email])
 
-        if expositor&.authenticate(params[:password])
+        return render json: { error: "Expositor não encontrado" }, status: :unauthorized if expositor.nil?
+
+        if expositor.authenticate(params[:password])
+
+          # ✅ JWT PARA EXPOSITOR
+          token = jwt_encode(expositor_id: expositor.id)
+
           render json: {
             status: "success",
             data: {
-              token: SecureRandom.hex(20),
+              token: token,
               expositor: expositor
             }
-          }
+          }, status: :ok
         else
-          render json: {
-            status: "error",
-            message: "Credenciais inválidas"
-          }, status: :unauthorized
+          render json: { error: "Senha inválida" }, status: :unauthorized
         end
       end
     end

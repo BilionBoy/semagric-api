@@ -11,6 +11,7 @@ module Apirails
     config.autoload_paths += %W[#{config.root}/lib]               # Adiciona diretórios ao autoload do Rails em desevolvimento
     config.autoload_lib(ignore: %w[assets tasks])
 
+
     config.time_zone = "La Paz"                                   # Configuração do Time Zone
     config.i18n.default_locale = :'pt-BR'                         # Configuração do idioma padrão
 

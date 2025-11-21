@@ -1,13 +1,14 @@
-# frozen_string_literal: true
-
 module Api
   module V1
     class EClientesController < ApplicationController
       before_action :set_e_cliente, only: [ :show, :update, :destroy ]
 
       def index
-        @e_clientes = ECliente.all
-        render json: @e_clientes
+        if current_expositor
+          render json: ECliente.where(e_expositor_id: current_expositor.id)
+        else
+          render json: []
+        end
       end
 
       def show
@@ -15,7 +16,11 @@ module Api
       end
 
       def create
+        return render json: { error: "Expositor não logado" }, status: :unauthorized unless current_expositor
+
         @e_cliente = ECliente.new(e_cliente_params)
+        @e_cliente.e_expositor_id = current_expositor.id
+
         if @e_cliente.save
           render json: @e_cliente, status: :created
         else
@@ -45,7 +50,9 @@ module Api
       end
 
       def e_cliente_params
-        params.require(:e_cliente).permit(:nome, :telefone, :email, :endereco, :interesse, :e_expositor_id)
+        params.require(:e_cliente).permit(
+          :nome, :telefone, :email, :endereco, :interesse, :cidade, :estado
+        )
       end
     end
   end
