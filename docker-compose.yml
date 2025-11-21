@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    container_name: expo_db
+    restart: always
+    environment:
+      POSTGRES_DB: expo_mvp_production
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - expo_pgdata:/var/lib/postgresql/data
+
+  api:
+    build: .
+    container_name: expo_api
+    restart: always
+    command: bundle exec rails server -b 0.0.0.0 -p 4000
+    env_file:
+      - .env
+    environment:
+      RAILS_ENV: production
+      SECRET_KEY_BASE: 3da8ebbd623b89bb2a5147bd70c8af48bba5da2aca4b410734994e36300c7d704c8758527014ea60aa3f92865eedae0b9dbd02c825557b6558fba2bec01566c6
+      PG_HOST: db
+      PG_PORT: 5432
+      PG_USER: postgres
+      PG_PASSWORD: postgres
+      PG_DATABASE: expo_mvp_production
+      JWT_SECRET: 9f3c1f4c0b2d487e8a1d6f51e7c3a9d2f4b8e6a7c1d04f87b2e5c6a9f3d1b0c4
+      RAILS_MAX_THREADS: 5
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
+
+volumes:
+  expo_pgdata:
