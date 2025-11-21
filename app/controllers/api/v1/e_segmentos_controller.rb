@@ -31,10 +31,15 @@ module Api
         end
       end
 
-      def destroy
-        @e_segmento.destroy
-        head :no_content
-      end
+    def destroy
+      @e_segmento.destroy
+
+      render json: {
+        status: "success",
+        message: "Segmento removido com sucesso"
+      }, status: :ok
+    end
+
 
       private
 

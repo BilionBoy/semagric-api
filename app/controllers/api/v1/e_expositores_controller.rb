@@ -2,13 +2,13 @@
 
 module Api
   module V1
-    class EExpositorsController < ApplicationController
+    class EExpositoresController < ApplicationController
       before_action :set_e_expositor, only: [ :show, :update, :destroy ]
       skip_before_action :authenticate_user!, only: [ :create ]
 
       def index
-        @e_expositores = EExpositor.all
-        render json: @e_expositores
+        expositores = EExpositor.all
+        render json: expositores
       end
 
       def show
@@ -16,25 +16,42 @@ module Api
       end
 
       def create
-        @e_expositor = EExpositor.new(e_expositor_params)
-        if @e_expositor.save
-          render json: @e_expositor, status: :created
+        expositor = EExpositor.new(e_expositor_params)
+
+        if expositor.save
+          render json: {
+            status: "success",
+            message: "Expositor cadastrado com sucesso",
+            data: expositor
+          }, status: :created
         else
-          render json: @e_expositor.errors, status: :unprocessable_entity
+          render json: {
+            status: "error",
+            message: "Falha ao cadastrar expositor",
+            errors: expositor.errors.full_messages
+          }, status: :unprocessable_entity
         end
       end
 
       def update
         if @e_expositor.update(e_expositor_params)
-          render json: @e_expositor
+          render json: {
+            status: "success",
+            message: "Expositor atualizado com sucesso",
+            data: @e_expositor
+          }
         else
-          render json: @e_expositor.errors, status: :unprocessable_entity
+          render json: {
+            status: "error",
+            message: "Falha ao atualizar",
+            errors: @e_expositor.errors.full_messages
+          }, status: :unprocessable_entity
         end
       end
 
       def destroy
         @e_expositor.destroy
-        head :no_content
+        render json: { status: "success", message: "Registro removido" }
       end
 
       private
@@ -42,12 +59,28 @@ module Api
       def set_e_expositor
         @e_expositor = EExpositor.find(params[:id])
       rescue ActiveRecord::RecordNotFound
-        render json: { error: "Not found" }, status: :not_found
+        render json: { error: "Registro não encontrado" }, status: :not_found
       end
 
-      # 🔥 strong params CORRIGIDOS 100%
+      # ✅ Strong params tolerante (aceita com ou sem wrapper)
       def e_expositor_params
-        params.require(:e_expositor).permit(:e_evento_id, :e_tipo_expositor_id, :e_segmento_id, :status, :empresa, :cnpj, :nome_completo, :cpf, :responsavel, :email_contato, :telefone_contato, :cidade, :estado, :stand
+        data = params[:e_expositor] || params
+
+        data.permit(
+          :e_evento_id,
+          :e_tipo_expositor_id,
+          :e_segmento_id,
+          :status,
+          :empresa,
+          :cnpj,
+          :nome_completo,
+          :cpf,
+          :responsavel,
+          :email_contato,
+          :telefone_contato,
+          :cidade,
+          :estado,
+          :stand
         )
       end
     end

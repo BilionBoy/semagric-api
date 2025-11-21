@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class ENegociacaosController < ApplicationController
+    class ENegociacoesController < ApplicationController
       before_action :set_e_negociacao, only: [ :show, :update, :destroy ]
 
       def index

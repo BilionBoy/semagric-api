@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class ETipoExpositorsController < ApplicationController
+    class ETipoExpositoresController < ApplicationController
       before_action :set_e_tipo_expositor, only: [ :show, :update, :destroy ]
 
       def index
