@@ -1,29 +1,40 @@
 class ApplicationController < ActionController::API
   include JsonWebToken
   include JsonResponse
-  include ActionController::Cookies
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, unless: :auth_controller?
 
   def authenticate_user!
     header = request.headers["Authorization"]
     token = header&.split&.last
 
-    decoded = jwt_decode(token)
+    unless token
+      render json: { error: "Token ausente" }, status: :unauthorized
+      return
+    end
 
-    # ✅ ADMIN
-    if decoded&.[](:user_id) && User.exists?(decoded[:user_id])
+    decoded = jwt_decode(token)
+    unless decoded
+      render json: { error: "Token inválido" }, status: :unauthorized
+      return
+    end
+
+    if decoded[:user_id] && User.exists?(decoded[:user_id])
       @current_user = User.find(decoded[:user_id])
       return
     end
 
-    # ✅ EXPOSITOR
-    if decoded&.[](:expositor_id) && EExpositor.exists?(decoded[:expositor_id])
+    if decoded[:expositor_id] && EExpositor.exists?(decoded[:expositor_id])
       @current_expositor = EExpositor.find(decoded[:expositor_id])
       return
     end
 
     render json: { error: "Não autorizado" }, status: :unauthorized
+  end
+
+  def auth_controller?
+    self.class.name == "Api::V1::AuthController" ||
+    self.class.name == "Api::V1::ExpositorAuthController"
   end
 
   def current_user
