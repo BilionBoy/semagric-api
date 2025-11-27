@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 class ApplicationController < ActionController::API
   include JsonWebToken
   include JsonResponse
 
-  before_action :authenticate_user!, unless: :public_route?
+  before_action :authenticate_user!, unless: :auth_controller?
 
   def authenticate_user!
     header = request.headers["Authorization"]
@@ -34,17 +32,9 @@ class ApplicationController < ActionController::API
     render json: { error: "Não autorizado" }, status: :unauthorized
   end
 
-  # ✅ ROTAS QUE NÃO PRECISAM TOKEN
-  def public_route?
-    public_paths = [
-      "/api/v1/auth/login",
-      "/api/v1/expositor/login",
-      "/api/v1/e_segmentos",
-      "/api/v1/e_segmentos/",
-      "/api/v1/e_expositores"
-    ]
-
-    public_paths.any? { |path| request.path.start_with?(path) }
+  def auth_controller?
+    self.class.name == "Api::V1::AuthController" ||
+    self.class.name == "Api::V1::ExpositorAuthController"
   end
 
   def current_user
