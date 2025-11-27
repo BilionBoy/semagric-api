@@ -3,22 +3,23 @@ class EExpositor < ApplicationRecord
   belongs_to :e_tipo_expositor
   belongs_to :e_segmento
 
-  has_secure_password validations: false
+  has_secure_password
 
   before_validation :normalize_documents
 
-  validates :password,                       presence: true, on: :update
-  validates :empresa,                        presence: true, if: :juridica?
-  validates :cnpj,                           presence: true, if: :juridica?
-  validates :nome_completo,                  presence: true, if: :fisica?
-  validates :cpf,                            presence: true, if: :fisica?
-  validates :responsavel,                    presence: true
-  validates :email_contato,                  presence: true
-  validates :telefone_contato,               presence: true
-  validates :cidade, :estado,                presence: true
-  validates :status,                         presence: true
+  validates :empresa,          presence: true, if: :juridica?
+  validates :cnpj,             presence: true, if: :juridica?
+  validates :nome_completo,    presence: true, if: :fisica?
+  validates :cpf,              presence: true, if: :fisica?
 
-  private
+  validates :responsavel,      presence: true
+  validates :email_contato,    presence: true
+  validates :telefone_contato, presence: true
+  validates :cidade, :estado,  presence: true
+  validates :status,           presence: true
+
+  # ✅ senha OBRIGATÓRIA só na criação
+  validates :password, presence: true, on: :create
 
   def juridica?
     e_tipo_expositor_id == 2
@@ -29,12 +30,7 @@ class EExpositor < ApplicationRecord
   end
 
   def normalize_documents
-    if cnpj.present?
-      self.cnpj = cnpj.gsub(/\D/, "")
-    end
-
-    if cpf.present?
-      self.cpf = cpf.gsub(/\D/, "")
-    end
+    self.cnpj = cnpj.gsub(/\D/, "") if cnpj.present?
+    self.cpf  = cpf.gsub(/\D/, "") if cpf.present?
   end
 end
