@@ -1,10 +1,9 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "http://31.97.168.215:3001", "http://localhost:3001"
+    origins "*"
 
     resource "*",
       headers: :any,
-      methods: %i[get post put patch delete options head],
-      credentials: true
+      methods: %i[get post put patch delete options head]
   end
 end
