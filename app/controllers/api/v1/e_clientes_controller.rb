@@ -1,11 +1,15 @@
 module Api
   module V1
     class EClientesController < ApplicationController
-      before_action :set_e_cliente, only: [ :show, :update, :destroy ]
+      before_action :set_e_cliente, only: [:show, :update, :destroy]
 
       def index
         if current_expositor
+          # expositor autenticado: apenas os clientes do expositor
           render json: ECliente.where(e_expositor_id: current_expositor.id)
+        elsif current_user
+          # usuário autenticado (admin): retorna todos os clientes
+          render json: ECliente.all
         else
           render json: []
         end
