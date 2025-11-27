@@ -34,17 +34,16 @@ class ApplicationController < ActionController::API
     render json: { error: "Não autorizado" }, status: :unauthorized
   end
 
-  # ✅ ROTAS QUE NÃO PRECISAM TOKEN
+  # ✅ ROTAS PÚBLICAS (ACESSO LIVRE)
   def public_route?
-    public_paths = [
-      "/api/v1/auth/login",
-      "/api/v1/expositor/login",
-      "/api/v1/e_segmentos",
-      "/api/v1/e_segmentos/",
-      "/api/v1/e_expositores"
-    ]
+    path = request.path
 
-    public_paths.any? { |path| request.path.start_with?(path) }
+    return true if path.include?("/api/v1/e_segmentos")
+    return true if path.include?("/api/v1/e_expositores")
+    return true if path.include?("/api/v1/auth/login")
+    return true if path.include?("/api/v1/expositor/login")
+
+    false
   end
 
   def current_user
