@@ -3,12 +3,13 @@
 module Api
   module V1
     class ESegmentosController < ApplicationController
-      skip_before_action :authenticate_user!
+      # ✅ LIBERA APENAS ESTES
+      skip_before_action :authenticate_user!, only: [ :index, :show ]
+
       before_action :set_e_segmento, only: [ :show, :update, :destroy ]
 
       def index
-        @e_segmentos = ESegmento.all
-        render json: @e_segmentos
+        render json: ESegmento.all
       end
 
       def show
@@ -17,14 +18,10 @@ module Api
 
       def create
         @e_segmento = ESegmento.new(e_segmento_params)
-
         if @e_segmento.save
           render json: @e_segmento, status: :created
         else
-          render json: {
-            status: "error",
-            errors: @e_segmento.errors.full_messages
-          }, status: :unprocessable_entity
+          render json: { errors: @e_segmento.errors.full_messages }, status: :unprocessable_entity
         end
       end
 
@@ -32,27 +29,19 @@ module Api
         if @e_segmento.update(e_segmento_params)
           render json: @e_segmento
         else
-          render json: {
-            status: "error",
-            errors: @e_segmento.errors.full_messages
-          }, status: :unprocessable_entity
+          render json: { errors: @e_segmento.errors.full_messages }, status: :unprocessable_entity
         end
       end
 
       def destroy
         @e_segmento.destroy
-        render json: {
-          status: "success",
-          message: "Segmento removido com sucesso"
-        }, status: :ok
+        render json: { status: "success" }
       end
 
       private
 
       def set_e_segmento
         @e_segmento = ESegmento.find(params[:id])
-      rescue ActiveRecord::RecordNotFound
-        render json: { error: "Not found" }, status: :not_found
       end
 
       def e_segmento_params
