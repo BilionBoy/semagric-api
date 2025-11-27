@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   include JsonWebToken
   include JsonResponse
 
-  # ✅ AGORA protege tudo, EXCETO rotas públicas
+  # ✅ Protege tudo, EXCETO rotas públicas
   before_action :authenticate_user!, unless: :public_route?
 
   def authenticate_user!
@@ -33,11 +33,17 @@ class ApplicationController < ActionController::API
     render json: { error: "Não autorizado" }, status: :unauthorized
   end
 
-  # ✅ ROTAS QUE NÃO PRECISAM TOKEN
+  # ✅ ROTAS QUE NÃO PRECISAM TOKEN (com e sem /v1)
   def public_route?
     return true if auth_controller?
-    return true if request.path.start_with?("/api/v1/e_segmentos")
-    return true if request.path == "/api/v1/e_expositores" && request.post?
+
+    path = request.path
+
+    return true if path.start_with?("/api/v1/e_segmentos")
+    return true if path.start_with?("/api/e_segmentos")
+
+    return true if (path == "/api/v1/e_expositores" || path == "/api/e_expositores") && request.post?
+
     false
   end
 
