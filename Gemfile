@@ -61,6 +61,6 @@ end
   gem "jwt"
 
   # Para armazenar senhas hashadas
-  gem "bcrypt", "~> 3.1.7"
+  gem "bcrypt", "~> 3.1.21"
 
   gem "dotenv-rails", groups: [ :development, :test ]
